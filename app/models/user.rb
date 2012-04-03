@@ -9,7 +9,7 @@
 #  updated_at :datetime
 #
 
-#require 'digest'
+require 'digest'
 class User < ActiveRecord::Base
   attr_accessor :password
   attr_accessible :name, :email, :password, :password_confirmation
@@ -33,11 +33,12 @@ class User < ActiveRecord::Base
     encrypted_password == encrypt(submitted_password)
   end
 
-  def self.authenticate(email, submitted_password)
+  def User.authenticate(email, submitted_password)
     user = find_by_email(email)
     return nil  if user.nil?
     return user if user.has_password?(submitted_password)
   end
+
 
   private
 
